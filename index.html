@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSの勉強</title>
+  <style>
+    .job {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .warn {
+      font-size: 40px;
+      color: red;
+    }
+
+    .container {
+      width: 200px;
+      margin: 100px auto;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <button id="start">開始</button>
+    <button id="stop">終了</button>
+    <p id="text"></p>
+  </div>
+  <script>
+    'use strict';
+    {
+      const start = document.getElementById('start');
+      const stop = document.getElementById('stop');
+      const text = document.getElementById('text');
+      let startTime;
+      let timeOutId;
+      start.disabled=false;
+      stop.disabled=true;
+
+      function countUp() {
+        const d = new Date(Date.now() - startTime);
+        const s = d.getSeconds();
+        stop.addEventListener('click', () => {
+          start.disabled=false;
+          stop.disabled=true;
+          clearTimeout(timeOutId);
+          text.textContent = `${s}秒後に停止しました`
+        });
+        timeOutId = setTimeout(() => {
+          countUp();
+        }, 10)
+      }
+
+      start.addEventListener('click', () => {
+        start.disabled=true;
+        stop.disabled=false;
+        text.textContent=''
+        startTime = Date.now();
+        countUp();
+      });
+    }
+  </script>
+
+
+</body>
+
+</html>
